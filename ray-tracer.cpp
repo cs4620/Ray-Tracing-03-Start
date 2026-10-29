@@ -30,10 +30,32 @@ int main()
   /// The 1d array for storing the pixel we have generated
   unsigned char pixels[w * h * 3];
 
-  Triangle triangle = Triangle{Vector3{-1, 1, 0}, Vector3{-1, -1, 0}, Vector3{1, -1, 0}};
-  Triangle triangle2 = Triangle{Vector3{-1, 1, .5}, Vector3{-1, -1, -.5}, Vector3{1, -1, .5}};
+  // Left Wall
+  Triangle triangle01 = Triangle{Vector3{-1, 1, -2}, Vector3{-1, 1, -1}, Vector3{-1, -1, -2}};
+  Triangle triangle02 = Triangle{Vector3{-1, 1, -1}, Vector3{-1, -1, -1}, Vector3{-1, -1, -2}};
 
-  vector<Triangle> triangles = {triangle, triangle2};
+  // Right Wall
+  Triangle triangle03 = Triangle{Vector3{1, 1, -1}, Vector3{1, 1, -2}, Vector3{1, -1, -2}};
+  Triangle triangle04 = Triangle{Vector3{1, -1, -1}, Vector3{1, 1, -1}, Vector3{1, -1, -2}};
+
+  // Top Wall
+  Triangle triangle05 = Triangle{Vector3{-1, 1, -1}, Vector3{-1, 1, -2}, Vector3{1, 1, -2}};
+  Triangle triangle06 = Triangle{Vector3{1, 1, -1}, Vector3{-1, 1, -1}, Vector3{1, 1, -2}};
+
+  // Bottom Wall
+  Triangle triangle07 = Triangle{Vector3{-1, -1, -2}, Vector3{-1, -1, -1}, Vector3{1, -1, -2}};
+  Triangle triangle08 = Triangle{Vector3{-1, -1, -1}, Vector3{1, -1, -1}, Vector3{1, -1, -2}};
+
+  // Back Wall
+  Triangle triangle09 = Triangle{Vector3{-1, 1, -2}, Vector3{-1, -1, -2}, Vector3{1, -1, -2}};
+  Triangle triangle10 = Triangle{Vector3{1, 1, -2}, Vector3{-1, 1, -2}, Vector3{1, -1, -2}};
+
+  vector<Triangle> triangles = {
+      triangle01, triangle02,
+      triangle03, triangle04,
+      triangle05, triangle06,
+      triangle07, triangle08,
+      triangle09, triangle10};
 
   Vector3 background_color = Vector3{150, 0, 255};
 
@@ -71,7 +93,6 @@ int main()
       // cout << ray << endl;
       // cout<<"Two"<<endl;
 
-
       float closest_t = 1000000;
 
       for (const Triangle &triangle : triangles)
@@ -86,9 +107,8 @@ int main()
 
         float t = -(abc.dot(camera_origin) + d) / abc.dot(ray);
 
-        if(t > closest_t)
+        if (t > closest_t)
           continue;
-        
 
         // cout << abc << " " << d << " " << t << endl;
 
